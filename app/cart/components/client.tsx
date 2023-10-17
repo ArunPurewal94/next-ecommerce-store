@@ -16,9 +16,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { ItemContent } from "./item-content";
 import { FormatPrice } from "@/lib/format-price";
+import { useRouter } from "next/navigation";
 
 export const CartClient = () => {
   const { cartProducts, clearWholeCart, cartTotalAmount } = useCart();
+  const router = useRouter();
 
   if (!cartProducts || cartProducts.length === 0) {
     return (
@@ -55,7 +57,12 @@ export const CartClient = () => {
             </Link>
           </TableCaption>
           <TableCaption className="text-right">
-            <Button className="w-full lg:w-1/3">Checkout</Button>
+            <Button
+              onClick={() => router.push("/checkout")}
+              className="w-full lg:w-1/3"
+            >
+              Checkout
+            </Button>
           </TableCaption>
           <TableHeader>
             <TableRow>
