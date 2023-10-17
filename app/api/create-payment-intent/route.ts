@@ -37,17 +37,22 @@ export async function POST(request: Request) {
   };
 
   if (payment_intent_id) {
-    const current_intent = await stripe.paymentIntents.retrieve(
-      payment_intent_id
-    );
+    console.log("Updating Payment Intent", payment_intent_id);
+    const current_intent = await stripe.paymentIntents
+      .retrieve(payment_intent_id)
+      .catch((error) => {
+        console.log("Error paymentIntents.retrieve", error);
+      });
 
     if (current_intent) {
-      const updated_intent = await stripe.paymentIntents.update(
-        payment_intent_id,
-        {
+      const updated_intent = await stripe.paymentIntents
+        .update(payment_intent_id, {
           amount: total,
-        }
-      );
+        })
+        .catch((error) => {
+          console.log("Error paymentIntents.update", error);
+        });
+
       const [existing_order, update_order] = await Promise.all([
         prisma.order.findFirst({
           where: {
@@ -76,6 +81,7 @@ export async function POST(request: Request) {
     }
   } else {
     // Create Payment Intent
+    console.log("Creating Payment Intent --- XXX", payment_intent_id);
     const paymentIntent = await stripe.paymentIntents.create({
       amount: total,
       currency: "GBP",
