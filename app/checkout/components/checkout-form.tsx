@@ -58,13 +58,14 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
           handleSetPaymentSuccess(true);
           handleSetPaymentIntent(null);
         }
+        console.log(result.error);
       });
 
     setIsLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} id="payment-form">
+    <div id="payment-form">
       <div className="mb-6">
         <h1 className="text-2xl text-slate-900 mt-5 text-center font-semibold">
           Enter payment details to complete checkout
@@ -78,10 +79,10 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
         Total: {formattedPrice}
       </div>
       <div className="mb-4">
-        <Button className="w-full" disabled={isLoading}>
+        <Button onClick={handleSubmit} className="w-full" disabled={isLoading}>
           {isLoading ? "Processing..." : "Complete Order"}
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
