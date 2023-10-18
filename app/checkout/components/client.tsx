@@ -24,7 +24,7 @@ export const CheckoutClient = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
-    if (cartProducts) {
+    if (cartProducts && !paymentSuccess) {
       setIsLoading(true);
       setError(false);
 
@@ -53,7 +53,13 @@ export const CheckoutClient = () => {
           toast.error("Something went wrong!");
         });
     }
-  }, [cartProducts, handleSetPaymentIntent, paymentIntent, router]);
+  }, [
+    cartProducts,
+    handleSetPaymentIntent,
+    paymentIntent,
+    router,
+    paymentSuccess,
+  ]);
 
   const options: StripeElementsOptions = {
     clientSecret,
@@ -69,7 +75,7 @@ export const CheckoutClient = () => {
 
   return (
     <div className="w-full">
-      {clientSecret && cartProducts && (
+      {clientSecret && cartProducts && !paymentSuccess && !error && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm
             clientSecret={clientSecret}

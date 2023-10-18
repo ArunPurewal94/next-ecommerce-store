@@ -64,12 +64,13 @@ type Image {
 }
 
 type Address {
-  city      String
   country   String
   line1     String
   line2     String?
   post_code String
   county    String?
+  city      String
+  state     String?
 }
 
 model Order {

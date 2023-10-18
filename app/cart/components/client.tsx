@@ -17,8 +17,13 @@ import { Button } from "@/components/ui/button";
 import { ItemContent } from "./item-content";
 import { FormatPrice } from "@/lib/format-price";
 import { useRouter } from "next/navigation";
+import { SafeUser } from "@/types";
 
-export const CartClient = () => {
+interface CartClientProps {
+  currentUser: SafeUser | null;
+}
+
+export const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
   const { cartProducts, clearWholeCart, cartTotalAmount } = useCart();
   const router = useRouter();
 
@@ -58,10 +63,12 @@ export const CartClient = () => {
           </TableCaption>
           <TableCaption className="text-right">
             <Button
-              onClick={() => router.push("/checkout")}
+              onClick={() =>
+                currentUser ? router.push("/checkout") : router.push("/login")
+              }
               className="w-full lg:w-1/3"
             >
-              Checkout
+              {currentUser ? "Checkout" : "Log in to Checkout"}
             </Button>
           </TableCaption>
           <TableHeader>
