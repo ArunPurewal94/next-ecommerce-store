@@ -3,8 +3,8 @@
 import { CartProductType } from "@/app/product/components/product-details";
 import { SetQuantity } from "@/app/product/components/set-quantity";
 import { Button } from "@/components/ui/button";
-import { FormatPrice } from "@/lib/format-price";
-import { TruncateText } from "@/lib/truncate-text";
+import { FormatPrice } from "@/lib/utils";
+import { TruncateText } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { BsTrash } from "react-icons/bs";

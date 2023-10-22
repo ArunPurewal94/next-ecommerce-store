@@ -7,7 +7,7 @@ export default async function RegisterPage() {
   const currentUser = await getCurrentUser();
   return (
     <Container>
-      <FormWrap>
+      <FormWrap className="pt-6">
         <RegisterForm currentUser={currentUser} />
       </FormWrap>
     </Container>

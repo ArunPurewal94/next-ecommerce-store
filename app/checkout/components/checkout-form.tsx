@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
-import { FormatPrice } from "@/lib/format-price";
+import { FormatPrice } from "@/lib/utils";
 import {
   AddressElement,
   PaymentElement,

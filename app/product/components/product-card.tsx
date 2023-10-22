@@ -1,7 +1,7 @@
 "use client";
 
-import { FormatPrice } from "@/lib/format-price";
-import { TruncateText } from "@/lib/truncate-text";
+import { FormatPrice } from "@/lib/utils";
+import { TruncateText } from "@/lib/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

@@ -1,9 +1,9 @@
 "use client";
 
 import { useCart } from "@/hooks/use-cart";
-import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Elements } from "@stripe/react-stripe-js";
 import { ImSpinner2 } from "react-icons/im";
@@ -24,41 +24,44 @@ export const CheckoutClient = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
-    if (cartProducts && !paymentSuccess) {
-      setIsLoading(true);
-      setError(false);
+    console.log("cartProducts", cartProducts);
+    if (!cartProducts || paymentSuccess) return;
 
-      fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: cartProducts,
-          payment_intent_id: paymentIntent,
-        }),
+    setIsLoading(true);
+    setError(false);
+
+    console.log("called checkout client + create-payment-intent");
+
+    fetch("/api/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: cartProducts,
+        payment_intent_id: paymentIntent,
+      }),
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.status === 401) {
+          return router.push("/login");
+        }
+
+        return res.json();
       })
-        .then((res) => {
-          setIsLoading(false);
-          if (res.status === 401) {
-            return router.push("/login");
-          }
-
-          return res.json();
-        })
-        .then((data) => {
-          setClientSecret(data.paymentIntent.client_secret);
-          handleSetPaymentIntent(data.paymentIntent.id);
-        })
-        .catch((error) => {
-          setError(true);
-          toast.error("Something went wrong!");
-        });
-    }
+      .then((data) => {
+        setClientSecret(data.paymentIntent.client_secret);
+        handleSetPaymentIntent(data.paymentIntent.id);
+      })
+      .catch((error) => {
+        setError(true);
+        toast.error("Something went wrong!");
+      });
   }, [
     cartProducts,
     handleSetPaymentIntent,
     paymentIntent,
-    router,
     paymentSuccess,
+    router,
   ]);
 
   const options: StripeElementsOptions = {
@@ -69,17 +72,13 @@ export const CheckoutClient = () => {
     },
   };
 
-  const handleSetPaymentSuccess = useCallback((value: boolean) => {
-    setPaymentSuccess(value);
-  }, []);
-
   return (
     <div className="w-full">
       {clientSecret && cartProducts && !paymentSuccess && !error && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm
             clientSecret={clientSecret}
-            handleSetPaymentSuccess={handleSetPaymentSuccess}
+            handleSetPaymentSuccess={setPaymentSuccess}
           />
         </Elements>
       )}

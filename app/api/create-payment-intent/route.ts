@@ -32,6 +32,7 @@ export async function POST(request: Request) {
     amount: total,
     currency: "GBP",
     status: "pending",
+    deliveryStatus: "pending",
     paymentIntentId: payment_intent_id,
     products: items,
   };
@@ -66,6 +67,7 @@ export async function POST(request: Request) {
           data: {
             amount: total,
             products: items,
+            deliveryStatus: "pending",
           },
         }),
       ]);

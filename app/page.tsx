@@ -1,10 +1,23 @@
 import { Fragment } from "react";
 import { Banner } from "@/components/banner";
 import { Container } from "@/components/ui/container";
-import { products } from "@/lib/products";
 import { ProductCard } from "@/app/product/components/product-card";
+import getProducts, { ProductParams } from "@/actions/get-products";
+import { AccessDenied } from "@/components/access-denied";
 
-export default function Home() {
+interface HomeProps {
+  searchParams: ProductParams;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const products = await getProducts(searchParams);
+
+  if (products.length === 0) {
+    return (
+      <AccessDenied title="No products found...Click all to clear filters." />
+    );
+  }
+
   return (
     <div>
       <Container>

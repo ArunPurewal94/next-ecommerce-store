@@ -1,13 +1,23 @@
 import { Container } from "@/components/ui/container";
 import { ProductDetails } from "../components/product-details";
-import { products } from "@/lib/products";
+import getProductById from "@/actions/get-product-by-id";
+import { AccessDenied } from "@/components/access-denied";
 
-interface ProductPageProps {
+interface ProductPageParams {
   productId: string;
 }
 
-export default function ProductPage({ params }: { params: ProductPageProps }) {
-  const product = products.find((item) => item.id === params.productId);
+export default async function ProductPage({
+  params,
+}: {
+  params: ProductPageParams;
+}) {
+  const product = await getProductById(params);
+
+  if (!product) {
+    return <AccessDenied title="No product found.." />;
+  }
+
   return (
     <div className="m-8">
       <Container>

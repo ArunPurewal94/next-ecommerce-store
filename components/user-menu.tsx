@@ -51,20 +51,25 @@ export const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                     )}
                   </Menu.Item>
                 </div>
-                <div className="px-1 py-1 ">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        href={"/admin"}
-                        className={`${
-                          active ? "bg-violet-500 text-white" : "text-gray-900"
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        Admin Dashboard
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </div>
+                {currentUser && currentUser.role === "ADMIN" ? (
+                  <div className="px-1 py-1 ">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          href={"/admin"}
+                          className={`${
+                            active
+                              ? "bg-violet-500 text-white"
+                              : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        >
+                          Admin Dashboard
+                        </Link>
+                      )}
+                    </Menu.Item>
+                  </div>
+                ) : null}
+
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (

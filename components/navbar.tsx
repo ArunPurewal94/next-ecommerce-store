@@ -4,6 +4,7 @@ import { Container } from "./ui/container";
 import { CartCount } from "./cart-count";
 import { UserMenu } from "./user-menu";
 import { getCurrentUser } from "@/actions/get-current-user";
+import { CategoriesNavbar } from "./categories-navbar";
 
 export const Navbar = async () => {
   const currentUser = await getCurrentUser();
@@ -25,6 +26,7 @@ export const Navbar = async () => {
           </div>
         </Container>
       </div>
+      <CategoriesNavbar />
     </div>
   );
 };

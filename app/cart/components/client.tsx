@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { ItemContent } from "./item-content";
-import { FormatPrice } from "@/lib/format-price";
+import { FormatPrice } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "@/types";
 

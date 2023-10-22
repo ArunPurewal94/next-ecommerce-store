@@ -7,7 +7,7 @@ export default async function LoginPage() {
   const currentUser = await getCurrentUser();
   return (
     <Container>
-      <FormWrap>
+      <FormWrap className="pt-6">
         <LoginForm currentUser={currentUser} />
       </FormWrap>
     </Container>

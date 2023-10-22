@@ -87,3 +87,14 @@ model Order {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  price       Float
+  category    String
+  inStock     Boolean
+  images      Image[]
+  sizes       String[]
+}
