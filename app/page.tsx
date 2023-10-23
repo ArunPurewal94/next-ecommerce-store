@@ -2,15 +2,11 @@ import { Fragment } from "react";
 import { Banner } from "@/components/banner";
 import { Container } from "@/components/ui/container";
 import { ProductCard } from "@/app/product/components/product-card";
-import getProducts, { ProductParams } from "@/actions/get-products";
+import getProducts from "@/actions/get-products";
 import { AccessDenied } from "@/components/access-denied";
 
-interface HomeProps {
-  searchParams: ProductParams;
-}
-
-export default async function Home({ searchParams }: HomeProps) {
-  const products = await getProducts(searchParams);
+export default async function Home() {
+  const products = await getProducts({});
 
   if (products.length === 0) {
     return (

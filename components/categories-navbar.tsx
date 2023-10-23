@@ -1,38 +1,21 @@
-"use client";
+import { getCategories } from "@/actions/get-categories";
+import { Category } from "@/components/category";
+import { Container } from "@/components/ui/container";
 
-import { categories } from "@/lib/products";
-import { Container } from "./ui/container";
-import { Category } from "./category";
-import { usePathname, useSearchParams } from "next/navigation";
+export const CategoriesNavbar = async () => {
+  const categories = await getCategories();
 
-export const CategoriesNavbar = () => {
-  const params = useSearchParams();
-  const category = params?.get("category");
-  const pathname = usePathname();
-
-  const isMainPage = pathname === "/";
-
-  if (!isMainPage) {
+  if (!categories) {
     return null;
   }
 
   return (
-    <div className="bg-white">
-      <Container>
-        <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
-          {categories.map((item) => (
-            <Category
-              key={item.label}
-              label={item.label}
-              icon={item.icon}
-              selected={
-                category === item.label ||
-                (category === null && item.label === "All")
-              }
-            />
-          ))}
-        </div>
-      </Container>
-    </div>
+    <Container>
+      <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
+        {categories.map((category) => (
+          <Category key={category} label={category} />
+        ))}
+      </div>
+    </Container>
   );
 };

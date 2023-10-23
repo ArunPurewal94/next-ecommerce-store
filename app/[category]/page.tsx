@@ -2,22 +2,23 @@ import { Fragment } from "react";
 import { Banner } from "@/components/banner";
 import { Container } from "@/components/ui/container";
 import { ProductCard } from "@/app/product/components/product-card";
-import getProducts, { ProductParams } from "@/actions/get-products";
+import getProducts from "@/actions/get-products";
 import { AccessDenied } from "@/components/access-denied";
+import { useSearchParams } from "next/dist/client/components/navigation";
 
-interface HomeProps {
-  searchParams: ProductParams;
-}
+export default async function Home() {
+  const searchParams = useSearchParams(); // needs to be in a client component but can't use getProducts in client component only server component
+  const category = searchParams?.get("category") as string;
 
-export default async function Home({ params, searchParams }: any) {
-  console.log("test", params.category)
-  const products = await getProducts(searchParams);
+  const products = await getProducts({
+    cateogry: category === "All" ? null : category,
+  });
 
   const productsFiltered = products.filter((product) => {
-    if (params.category === "All") {
+    if (category === "All") {
       return product;
     } else {
-      return product.category === params.category;
+      return product.category === category;
     }
   });
 
