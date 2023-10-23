@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/actions/get-current-user";
 import { AccessDenied } from "@/components/access-denied";
 
 export default async function ManageProductsPage() {
-  const products = await getProducts({ cateogry: null });
+  const products = await getProducts({ category: null });
   const currentUser = await getCurrentUser();
 
   if (!currentUser || currentUser.role !== "ADMIN") {

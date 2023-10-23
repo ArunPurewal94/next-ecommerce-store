@@ -1,13 +1,13 @@
 import prisma from "@/lib/prismadb";
 
 export interface ProductParams {
-  cateogry?: string | null;
+  category?: string | null;
   searchTerm?: string | null;
 }
 
 export default async function getProducts(params: ProductParams) {
   try {
-    const { cateogry, searchTerm } = params;
+    const { category, searchTerm } = params;
 
     let searchString = searchTerm;
     if (!searchTerm) {
@@ -16,8 +16,8 @@ export default async function getProducts(params: ProductParams) {
 
     let query: any = {};
 
-    if (cateogry) {
-      query.cateogry = cateogry;
+    if (category) {
+      query.category = category;
     }
 
     const products = await prisma.product.findMany({

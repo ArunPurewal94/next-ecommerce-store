@@ -6,12 +6,12 @@ import getProducts from "@/actions/get-products";
 import { AccessDenied } from "@/components/access-denied";
 import { useSearchParams } from "next/dist/client/components/navigation";
 
-export default async function Home() {
-  const searchParams = useSearchParams(); // needs to be in a client component but can't use getProducts in client component only server component
-  const category = searchParams?.get("category") as string;
+export default async function Home(data: any) {
+  const { params, searchParams } = data;
+  const { category } = params;
 
   const products = await getProducts({
-    cateogry: category === "All" ? null : category,
+    category: category === "All" ? null : category,
   });
 
   const productsFiltered = products.filter((product) => {
