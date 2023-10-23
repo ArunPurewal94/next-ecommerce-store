@@ -4,10 +4,9 @@ import { Container } from "@/components/ui/container";
 import { ProductCard } from "@/app/product/components/product-card";
 import getProducts from "@/actions/get-products";
 import { AccessDenied } from "@/components/access-denied";
-import { useSearchParams } from "next/dist/client/components/navigation";
 
 export default async function Home(data: any) {
-  const { params, searchParams } = data;
+  const { params } = data;
   const { category } = params;
 
   const products = await getProducts({

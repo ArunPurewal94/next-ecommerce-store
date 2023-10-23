@@ -146,7 +146,7 @@ export const ManageProductClient: React.FC<ManageProductClientProps> = ({
                   <MdDelete />
                 </Button>
                 <Button
-                  onClick={() => router.push(`product/${product.id}`)}
+                  onClick={() => router.push(`/product/${product.id}`)}
                   variant="outline"
                   size="icon"
                 >
