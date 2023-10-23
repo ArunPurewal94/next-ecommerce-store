@@ -11,7 +11,7 @@ export const CategoriesNavbar = async () => {
 
   return (
     <Container>
-      <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
+      <div className="pt-4 flex flex-row items-center justify-evenly overflow-x-auto">
         {categories.map((category) => (
           <Category key={category} label={category} />
         ))}
