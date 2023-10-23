@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { Banner } from "@/components/banner";
-import { Container } from "@/components/ui/container";
 import { ProductCard } from "@/app/product/components/product-card";
 import getProducts from "@/actions/get-products";
 import { AccessDenied } from "@/components/access-denied";

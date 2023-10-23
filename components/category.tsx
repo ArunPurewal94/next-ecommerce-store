@@ -1,18 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { IconType } from "react-icons";
 import Link from "next/link";
 
 interface CategoryProps {
   label: string;
-  // icon: IconType;
 }
 
-export const Category: React.FC<CategoryProps> = ({
-  label,
-  // icon: Icon,
-}) => {
+export const Category: React.FC<CategoryProps> = ({ label }) => {
   const pathname = usePathname();
   const category = pathname ? pathname.split("/")[1] : "";
 
@@ -26,7 +21,6 @@ export const Category: React.FC<CategoryProps> = ({
         : "border-transparent text-slate-500"
     }`}
     >
-      {/* <Icon size={20} /> */}
       <span className="font-medium text-sm">{label}</span>
     </Link>
   );

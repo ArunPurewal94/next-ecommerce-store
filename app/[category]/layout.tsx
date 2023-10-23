@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
 import { CartProvider } from "@/providers/cart-provider";
 import { Container } from "@/components/ui/container";
-import { CategoriesNavbar } from "@/components/categories-navbar";
-
-const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Store",
@@ -18,9 +14,7 @@ export default async function RootLayout({
 }) {
   return (
     <Container>
-      <CartProvider>
-        {children}
-      </CartProvider>
+      <CartProvider>{children}</CartProvider>
     </Container>
   );
 }
