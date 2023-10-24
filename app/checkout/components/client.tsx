@@ -10,6 +10,7 @@ import { ImSpinner2 } from "react-icons/im";
 import { CheckoutForm } from "./checkout-form";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -105,8 +106,8 @@ export const CheckoutClient = () => {
             </h1>
           </div>
           <div>
-            <Button onClick={() => router.push("/orders")}>
-              View your orders
+            <Button>
+              <Link href="/orders">View your orders</Link>
             </Button>
           </div>
         </div>
