@@ -21,7 +21,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { SizeInput } from "../../add-products/components/size-input";
 import { CategoryInput } from "../../add-products/components/category-input";
-import { ColorInput } from "../../add-products/components/color-input";
+import { EditColorInput } from "./edit-color-input";
 
 interface EditProductFormProps {
   product: any;
@@ -56,6 +56,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
+      id: product.id,
       name: product.name,
       description: product.description,
       price: product.price,
@@ -195,13 +196,13 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
     };
 
     await handleImageUploads();
-    setIsLoading(false); // Move this line here
+    setIsLoading(false);
     const productData = { ...data, images: uploadedImages };
     // Upload products to mongoDB
     axios
-      .post("/api/product", productData)
+      .put("/api/product", productData)
       .then(() => {
-        toast.success("Product Created! 😊");
+        toast.success("Product Updated! 😊");
         setIsProductCreated(true);
         router.refresh();
       })
@@ -301,7 +302,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
         <div className="grid grid-cols-2 gap-3">
           {colors.map((item, index) => {
             return (
-              <ColorInput
+              <EditColorInput
                 key={index}
                 item={item}
                 addImageToState={addImageToState}
@@ -313,7 +314,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
         </div>
       </div>
       <Button type="submit" onClick={handleSubmit(onSubmit)} className="w-full">
-        {isLoading ? <ImSpinner2 className="animate-spin" /> : "Add Product"}
+        {isLoading ? <ImSpinner2 className="animate-spin" /> : "Update Product"}
       </Button>
     </>
   );

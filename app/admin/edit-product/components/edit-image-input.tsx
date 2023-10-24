@@ -2,14 +2,14 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { ImageType } from "./add-product-form";
+import { ImageType } from "./edit-product-form";
 
 interface ImageInputProps {
   item?: ImageType;
   handleFileChange: (value: File) => void;
 }
 
-export const ImageInput: React.FC<ImageInputProps> = ({
+export const EditImageInput: React.FC<ImageInputProps> = ({
   item,
   handleFileChange,
 }) => {
