@@ -5,14 +5,14 @@ import { AccessDenied } from "@/components/access-denied";
 import { EditProductForm } from "../components/edit-product-form";
 import getProductById from "@/actions/get-product-by-id";
 
-interface ProductPageParams {
+interface EditProductPageParams {
   productId: string;
 }
 
 export default async function EditProductsPage({
   params,
 }: {
-  params: ProductPageParams;
+  params: EditProductPageParams;
 }) {
   const currentUser = await getCurrentUser();
   const products = await getProductById(params);
