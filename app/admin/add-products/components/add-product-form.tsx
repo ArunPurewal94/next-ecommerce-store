@@ -111,14 +111,28 @@ export const AddProductForm = () => {
     // Upload Images to FB
     let uploadedImages: UploadedImageType[] = [];
 
+    if (!data.sizes || data.sizes.length === 0) {
+      setIsLoading(true);
+      toast.error("Must select at least one size");
+      setTimeout(() => setIsLoading(false), 5000); // adjust the time as needed
+      return;
+    }
+
     if (!data.category) {
-      setIsLoading(false);
-      return toast.error("Category is not selected");
+      setIsLoading(true);
+      toast.error("Category is not selected");
+      setTimeout(() => setIsLoading(false), 5000); // adjust the time as needed
+      return;
     }
 
     if (!data.images || data.images.length === 0) {
-      return toast.error("Must upload at least one image");
+      setIsLoading(true);
+      toast.error("Must upload at least one image");
+      setTimeout(() => setIsLoading(false), 5000); // adjust the time as needed
+      return;
     }
+
+    setIsLoading(false);
 
     const handleImageUploads = async () => {
       toast("Creating Product, Please wait...");
