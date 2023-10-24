@@ -15,7 +15,7 @@ export default async function EditProductsPage({
   params: EditProductPageParams;
 }) {
   const currentUser = await getCurrentUser();
-  const products = await getProductById(params);
+  const product = await getProductById(params);
 
   if (!currentUser || currentUser.role !== "ADMIN") {
     return <AccessDenied title="Oops! Access Denied" />;
@@ -25,7 +25,7 @@ export default async function EditProductsPage({
     <div className="p-8">
       <Container>
         <FormWrap>
-          <EditProductForm />
+          <EditProductForm product={product} />
         </FormWrap>
       </Container>
     </div>

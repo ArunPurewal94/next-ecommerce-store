@@ -23,6 +23,10 @@ import { SizeInput } from "../../add-products/components/size-input";
 import { CategoryInput } from "../../add-products/components/category-input";
 import { ColorInput } from "../../add-products/components/color-input";
 
+interface EditProductFormProps {
+  product: any;
+}
+
 export type ImageType = {
   color: string;
   colorCode: string;
@@ -35,7 +39,9 @@ export type UploadedImageType = {
   image: string;
 };
 
-export const EditProductForm = () => {
+export const EditProductForm: React.FC<EditProductFormProps> = ({
+  product,
+}) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageType[]>([]);
