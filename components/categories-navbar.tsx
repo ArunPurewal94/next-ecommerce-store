@@ -2,7 +2,9 @@ import { getCategories } from "@/actions/get-categories";
 import { Category } from "@/components/category";
 import { Container } from "@/components/ui/container";
 
-export const CategoriesNavbar = async () => {
+interface CategoriesNavbarProps {}
+
+export const CategoriesNavbar = async ({}: CategoriesNavbarProps) => {
   const categories = await getCategories();
 
   if (!categories) {

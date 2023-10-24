@@ -16,3 +16,7 @@ export const FormatPrice = (amount: number) => {
     currency: "GBP",
   }).format(amount);
 };
+
+export const FormatNumber = (digit: number) => {
+  return new Intl.NumberFormat("en-US").format(digit);
+};
