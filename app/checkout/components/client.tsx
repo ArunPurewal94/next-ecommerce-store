@@ -105,7 +105,7 @@ export const CheckoutClient = () => {
             </h1>
           </div>
           <div>
-            <Button onClick={() => router.push("/order")}>
+            <Button onClick={() => router.push("/orders")}>
               View your orders
             </Button>
           </div>
