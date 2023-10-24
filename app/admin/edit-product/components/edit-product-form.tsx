@@ -6,10 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { categories, colors } from "@/lib/products";
-import { CategoryInput } from "./category-input";
-import { SizeInput } from "./size-input";
 import { sizes } from "@/lib/products";
-import { ColorInput } from "./color-input";
 import { Button } from "@/components/ui/button";
 import { ImSpinner2 } from "react-icons/im";
 import toast from "react-hot-toast";
@@ -22,6 +19,9 @@ import {
 } from "firebase/storage";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { SizeInput } from "../../add-products/components/size-input";
+import { CategoryInput } from "../../add-products/components/category-input";
+import { ColorInput } from "../../add-products/components/color-input";
 
 export type ImageType = {
   color: string;
@@ -35,7 +35,7 @@ export type UploadedImageType = {
   image: string;
 };
 
-export const AddProductForm = () => {
+export const EditProductForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageType[]>([]);
@@ -215,7 +215,7 @@ export const AddProductForm = () => {
   return (
     <>
       <h1 className="text-2xl text-slate-900 mt-5 text-center font-semibold">
-        Add a Product
+        Edit Product
       </h1>
       <Input
         id="name"
