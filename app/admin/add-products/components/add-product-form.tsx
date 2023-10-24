@@ -114,21 +114,21 @@ export const AddProductForm = () => {
     if (!data.sizes || data.sizes.length === 0) {
       setIsLoading(true);
       toast.error("Must select at least one size");
-      setTimeout(() => setIsLoading(false), 5000); // adjust the time as needed
+      setTimeout(() => setIsLoading(false), 5000);
       return;
     }
 
     if (!data.category) {
       setIsLoading(true);
       toast.error("Category is not selected");
-      setTimeout(() => setIsLoading(false), 5000); // adjust the time as needed
+      setTimeout(() => setIsLoading(false), 5000);
       return;
     }
 
     if (!data.images || data.images.length === 0) {
       setIsLoading(true);
       toast.error("Must upload at least one image");
-      setTimeout(() => setIsLoading(false), 5000); // adjust the time as needed
+      setTimeout(() => setIsLoading(false), 5000);
       return;
     }
 
