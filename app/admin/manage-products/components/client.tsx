@@ -26,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { BsPencilSquare } from "react-icons/bs";
 
 interface ManageProductClientProps {
   products: Product[];
@@ -137,6 +138,15 @@ export const ManageProductClient: React.FC<ManageProductClientProps> = ({
                   size="icon"
                 >
                   <MdCached />
+                </Button>
+                <Button
+                  onClick={() =>
+                    router.push(`/admin/edit-product/${product.id}`)
+                  }
+                  variant="outline"
+                  size="icon"
+                >
+                  <BsPencilSquare />
                 </Button>
                 <Button
                   onClick={() => handleDelete(product.id, product.images)}

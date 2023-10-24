@@ -44,7 +44,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [images, setImages] = useState<ImageType[]>([]);
+  const [images, setImages] = useState<ImageType[]>(product.images);
   const [isProductCreated, setIsProductCreated] = useState(false);
 
   const {
@@ -56,13 +56,13 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      category: "",
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      category: product.category,
       inStock: true,
-      images: [],
-      sizes: [],
+      images: product.images,
+      sizes: product.sizes,
     },
   });
 
