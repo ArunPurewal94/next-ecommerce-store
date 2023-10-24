@@ -5,9 +5,17 @@ import { AccessDenied } from "@/components/access-denied";
 import { EditProductForm } from "../components/edit-product-form";
 import getProductById from "@/actions/get-product-by-id";
 
-export default async function AddProductsPage() {
+interface ProductPageParams {
+  productId: string;
+}
+
+export default async function EditProductsPage({
+  params,
+}: {
+  params: ProductPageParams;
+}) {
   const currentUser = await getCurrentUser();
-  const products = await getProductById({});
+  const products = await getProductById(params);
 
   if (!currentUser || currentUser.role !== "ADMIN") {
     return <AccessDenied title="Oops! Access Denied" />;
