@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { SizeInput } from "../../add-products/components/size-input";
 import { CategoryInput } from "../../add-products/components/category-input";
 import { EditColorInput } from "./edit-color-input";
+import Image from "next/image";
 
 interface EditProductFormProps {
   product: any;
@@ -44,7 +45,15 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [images, setImages] = useState<ImageType[]>(product.images);
+  const [images, setImages] = useState<{ [color: string]: string }>(
+    product.images.reduce(
+      (acc: any, cur: any) => ({ ...acc, [cur.color]: cur.image }),
+      {}
+    )
+  );
+  const [selectedFiles, setSelectedFiles] = useState<{
+    [color: string]: File | null;
+  }>({});
   const [isProductCreated, setIsProductCreated] = useState(false);
 
   const {
@@ -86,25 +95,16 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
   };
 
   const addImageToState = useCallback((value: ImageType) => {
-    setImages((prev) => {
-      if (prev === undefined) {
-        return [value];
-      }
-
-      return [...prev, value];
+    setSelectedFiles((prev) => {
+      return { ...prev, [value.color]: value.image };
     });
   }, []);
 
   const removeImageFromState = useCallback((value: ImageType) => {
-    setImages((prev) => {
-      if (prev !== undefined) {
-        const filteredImages = prev.filter(
-          (item) => item.color !== value.color
-        );
-        return filteredImages;
-      }
-
-      return prev;
+    setSelectedFiles((prev) => {
+      const newFiles = { ...prev };
+      delete newFiles[value.color];
+      return newFiles;
     });
   }, []);
 
@@ -214,7 +214,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
         setIsLoading(false);
       });
 
-    setImages([]);
+    setImages({});
     reset();
     setIsLoading(false);
   };
@@ -308,9 +308,34 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
                 addImageToState={addImageToState}
                 removeImageFromState={removeImageFromState}
                 isProductCreated={isProductCreated}
+                product={product}
               />
             );
           })}
+        </div>
+        <div className="flex items-center justify-evenly flex-wrap">
+          {Object.entries(images).map(([color, url]) => (
+            <div key={color}>
+              <h2>{color}</h2>
+              <Image
+                src={url}
+                alt={`Current ${color} product image`}
+                width={150}
+                height={150}
+              />
+              <button
+                onClick={() =>
+                  setImages((prev) => {
+                    const newImages = { ...prev };
+                    delete newImages[color];
+                    return newImages;
+                  })
+                }
+              >
+                Remove Image
+              </button>
+            </div>
+          ))}
         </div>
       </div>
       <Button type="submit" onClick={handleSubmit(onSubmit)} className="w-full">

@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { ImageType } from "./edit-product-form";
+import Image from "next/image"; // new import
 
 interface ImageInputProps {
   item?: ImageType;
@@ -43,6 +44,14 @@ export const EditImageInput: React.FC<ImageInputProps> = ({
           <p>+ {item?.color} Image</p>
         )}
       </div>
+      {selectedFile && (
+        <Image
+          src={URL.createObjectURL(selectedFile)}
+          alt="Selected image"
+          width={150}
+          height={150}
+        />
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { EditImageInput } from "./edit-image-input";
 import { Button } from "@/components/ui/button";
 import { ImageType } from "./edit-product-form";
+import Image from "next/image";
 
 interface ColorInputProps {
   item: ImageType;
@@ -12,14 +13,28 @@ interface ColorInputProps {
   isProductCreated: boolean;
 }
 
-export const EditColorInput: React.FC<ColorInputProps> = ({
+export const EditColorInput: React.FC<ColorInputProps & { product: any }> = ({
   item,
   addImageToState,
   removeImageFromState,
   isProductCreated,
+  product,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
-  const [file, setFile] = useState<File | null>();
+  const [file, setFile] = useState<File | null | undefined | string>(null);
+
+  useEffect(() => {
+    if (product && product.images) {
+      // If there's an image associated with this color in the product data, check this color and set the file
+      const matchingImage = product.images.find(
+        (image: any) => image.color === item.color
+      );
+      if (matchingImage) {
+        setIsSelected(true);
+        setFile(matchingImage.image);
+      }
+    }
+  }, [item.color, product]);
 
   useEffect(() => {
     if (isProductCreated) {
@@ -69,10 +84,23 @@ export const EditColorInput: React.FC<ColorInputProps> = ({
         </div>
       )}
 
-      {isSelected && file && (
+      {isSelected && file && typeof file !== "string" && (
         <div className="flex items-center gap-3">
+          <Image
+            src={URL.createObjectURL(file)}
+            alt="Selected image"
+            width={150}
+            height={150}
+          />
           <p>{file.name}</p>
-          <Button variant="destructive" size="sm" onClick={() => setFile(null)}>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => {
+              setFile(null);
+              removeImageFromState(item);
+            }}
+          >
             Cancel
           </Button>
         </div>
