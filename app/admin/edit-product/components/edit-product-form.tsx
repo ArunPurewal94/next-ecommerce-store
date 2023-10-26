@@ -45,12 +45,15 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [images, setImages] = useState<{ [color: string]: string }>(
+  const [images, setImages] = useState<{
+    [color: string]: File | string | null;
+  }>(
     product.images.reduce(
       (acc: any, cur: any) => ({ ...acc, [cur.color]: cur.image }),
       {}
     )
   );
+
   const [selectedFiles, setSelectedFiles] = useState<{
     [color: string]: File | null;
   }>({});
@@ -96,14 +99,14 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 
   const addImageToState = useCallback((value: ImageType) => {
     setSelectedFiles((prev) => {
-      return { ...prev, [value.color]: value.image };
+      return { ...prev, [value.color + value.colorCode]: value.image };
     });
   }, []);
 
   const removeImageFromState = useCallback((value: ImageType) => {
     setSelectedFiles((prev) => {
       const newFiles = { ...prev };
-      delete newFiles[value.color];
+      delete newFiles[value.color + value.colorCode];
       return newFiles;
     });
   }, []);
@@ -113,27 +116,29 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
   }, [images, setCustomValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("Product Data", data);
     setIsLoading(true);
-    // Upload Images to FB
+
+    // Merge selectedFiles into images
+    setImages((prevImages) => ({ ...prevImages, ...selectedFiles }));
+
     let uploadedImages: UploadedImageType[] = [];
 
     if (!data.sizes || data.sizes.length === 0) {
-      setIsLoading(true);
+      setIsLoading(false);
       toast.error("Must select at least one size");
       setTimeout(() => setIsLoading(false), 5000);
       return;
     }
 
     if (!data.category) {
-      setIsLoading(true);
+      setIsLoading(false);
       toast.error("Category is not selected");
       setTimeout(() => setIsLoading(false), 5000);
       return;
     }
 
-    if (!data.images || data.images.length === 0) {
-      setIsLoading(true);
+    if (!images || Object.values(images).length === 0) {
+      setIsLoading(false);
       toast.error("Must upload at least one image");
       setTimeout(() => setIsLoading(false), 5000);
       return;
@@ -141,13 +146,15 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 
     const handleImageUploads = async () => {
       toast("Creating Product, Please wait...");
+
       try {
-        for (const item of data.images) {
-          if (item.image) {
-            const filename = new Date().getTime() + "-" + item.image.name;
+        for (const [key, item] of Object.entries(images)) {
+          if (item instanceof File) {
+            const filename = new Date().getTime() + "-" + item.name;
+            const [color, colorCode] = key.split("");
             const storage = getStorage(firebase);
             const storageRef = ref(storage, `products/${filename}`);
-            const uploadTask = uploadBytesResumable(storageRef, item.image);
+            const uploadTask = uploadBytesResumable(storageRef, item);
 
             await new Promise<void>((resolve, reject) => {
               uploadTask.on(
@@ -173,7 +180,8 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
                   getDownloadURL(uploadTask.snapshot.ref)
                     .then((downloadURL) => {
                       uploadedImages.push({
-                        ...item,
+                        color: color,
+                        colorCode: colorCode,
                         image: downloadURL,
                       });
                       console.log("File available at", downloadURL);
@@ -197,10 +205,11 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 
     await handleImageUploads();
     setIsLoading(false);
+
     const productData = { ...data, images: uploadedImages };
-    // Upload products to mongoDB
+
     axios
-      .put("/api/product", productData)
+      .patch("/api/product", productData)
       .then(() => {
         toast.success("Product Updated! 😊");
         setIsProductCreated(true);
@@ -312,30 +321,6 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
               />
             );
           })}
-        </div>
-        <div className="flex items-center justify-evenly flex-wrap">
-          {Object.entries(images).map(([color, url]) => (
-            <div key={color}>
-              <h2>{color}</h2>
-              <Image
-                src={url}
-                alt={`Current ${color} product image`}
-                width={150}
-                height={150}
-              />
-              <button
-                onClick={() =>
-                  setImages((prev) => {
-                    const newImages = { ...prev };
-                    delete newImages[color];
-                    return newImages;
-                  })
-                }
-              >
-                Remove Image
-              </button>
-            </div>
-          ))}
         </div>
       </div>
       <Button type="submit" onClick={handleSubmit(onSubmit)} className="w-full">

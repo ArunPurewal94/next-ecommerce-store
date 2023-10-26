@@ -44,14 +44,6 @@ export const EditImageInput: React.FC<ImageInputProps> = ({
           <p>+ {item?.color} Image</p>
         )}
       </div>
-      {selectedFile && (
-        <Image
-          src={URL.createObjectURL(selectedFile)}
-          alt="Selected image"
-          width={150}
-          height={150}
-        />
-      )}
     </div>
   );
 };

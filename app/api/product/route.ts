@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   return NextResponse.json(product);
 }
 
-export async function PUT(request: Request) {
+export async function PATCH(request: Request) {
   const currentUser = await getCurrentUser();
   if (!currentUser || currentUser.role !== "ADMIN") {
     return NextResponse.error();
