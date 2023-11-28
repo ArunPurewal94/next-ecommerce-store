@@ -101,7 +101,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         />
       </div>
       <div>
-        <h2 className="text-3xl font-medium text-slate-700">{product.name}</h2>
+        <h2 className="text-3xl font-medium">{product.name}</h2>
         <div className="mt-3 text-justify">{product.description}</div>
         <Separator />
         <div>

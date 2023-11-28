@@ -25,7 +25,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
 
   return (
     <div className="p-8 m-auto flex flex-col gap-2">
-      <h1 className="text-2xl text-slate-900 mt-5 text-center font-semibold mb-5">
+      <h1 className="text-2xl mt-5 text-center font-semibold mb-5">
         Order Details
       </h1>
       <div className="flex flex-col items-center justify-center gap-2">

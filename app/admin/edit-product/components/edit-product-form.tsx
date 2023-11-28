@@ -220,9 +220,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 
   return (
     <>
-      <h1 className="text-2xl text-slate-900 mt-5 text-center font-semibold">
-        Edit Product
-      </h1>
+      <h1 className="text-2xl mt-5 text-center font-semibold">Edit Product</h1>
       <Input
         id="name"
         label="Name"

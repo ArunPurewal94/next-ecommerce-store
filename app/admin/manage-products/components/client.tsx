@@ -92,7 +92,7 @@ export const ManageProductClient: React.FC<ManageProductClientProps> = ({
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl text-slate-900 mb-5 text-center font-semibold">
+      <h1 className="text-2xl mb-5 text-center font-semibold">
         Manage Products
       </h1>
       <Table>

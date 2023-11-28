@@ -16,7 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   return (
     <Link
       href={`/product/${data.id}`}
-      className="col-span-1 cursor-pointer border border-slate-200 bg-slate-50 rounded p-2 transition hover:scale-105 text-center text-sm"
+      className="col-span-1 cursor-pointer border rounded p-2 transition hover:scale-105 text-center text-sm"
     >
       <div className="flex flex-col items-center w-full gap-1">
         {data.images[0]?.image && (

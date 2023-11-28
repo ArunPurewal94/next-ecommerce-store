@@ -34,7 +34,7 @@ export const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
         <div>
           <Link
             href={"/"}
-            className="text-slate-500 flex items-center gap-2 hover:text-slate-900 transition mt-2"
+            className="text-slate-500 flex items-center gap-2 hover:text-slate-900 dark:text-white transition mt-2"
           >
             <MdArrowBack />
             <span>Start Shopping</span>
@@ -45,7 +45,7 @@ export const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
   }
   return (
     <div>
-      <h1 className="text-2xl md:text-3xl text-slate-900 mt-5 text-center font-semibold">
+      <h1 className="text-2xl md:text-3xl text-slate-900 dark:text-white mt-5 text-center font-semibold">
         Your Shopping Cart
       </h1>
       <div className="mt-5">

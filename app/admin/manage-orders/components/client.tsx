@@ -74,9 +74,7 @@ export const ManagerOrderClient: React.FC<ManageOrderClientProps> = ({
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl text-slate-900 mb-5 text-center font-semibold">
-        Manage Orders
-      </h1>
+      <h1 className="text-2xl mb-5 text-center font-semibold">Manage Orders</h1>
       <Table>
         <TableCaption className="text-center lg:text-right "></TableCaption>
         <TableHeader>

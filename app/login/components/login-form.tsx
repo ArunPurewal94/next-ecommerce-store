@@ -69,9 +69,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
   return (
     <>
-      <h1 className="text-2xl md:text-3xl text-slate-900 mt-5 text-center">
-        Login to Store
-      </h1>
+      <h1 className="text-2xl md:text-3xl mt-5 text-center">Login to Store</h1>
       <Button
         disabled={isLoading}
         type="button"

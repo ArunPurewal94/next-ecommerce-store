@@ -64,9 +64,7 @@ export const Summary: React.FC<SummaryProps> = ({
 
   return (
     <div className="max-w-[1150px] m-auto">
-      <h1 className="text-2xl text-slate-900 mt-5 mb-4 text-center font-semibold">
-        Stats
-      </h1>
+      <h1 className="text-2xl mt-5 mb-4 text-center font-semibold">Stats</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 max-h-full overflow-y-auto gap-2 mb-5">
         {summaryKeys &&
           summaryKeys.map((key) => {

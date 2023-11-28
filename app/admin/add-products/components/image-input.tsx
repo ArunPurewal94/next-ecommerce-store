@@ -33,7 +33,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
   return (
     <div>
       <div
-        className="border-2 border-slate-400 p-2 border-dashed cursor-pointer text-sm font-normal text-slate-400 flex items-center justify-center mb-2"
+        className="border-2 border-slate-400 p-2 border-dashed cursor-pointer text-sm font-normal  flex items-center justify-center mb-2"
         {...getRootProps()}
       >
         <input {...getInputProps()} type="text" />

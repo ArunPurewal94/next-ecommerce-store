@@ -78,7 +78,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
 
   return (
     <>
-      <h1 className="text-2xl md:text-3xl text-slate-900 mt-5 text-center">
+      <h1 className="text-2xl md:text-3xl mt-5 text-center">
         Sign-up for Store
       </h1>
       <Button

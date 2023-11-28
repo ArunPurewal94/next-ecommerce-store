@@ -67,7 +67,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
   return (
     <div id="payment-form">
       <div className="mb-6">
-        <h1 className="text-2xl text-slate-900 mt-5 text-center font-semibold">
+        <h1 className="text-2xl mt-5 text-center font-semibold">
           Enter payment details to complete checkout
         </h1>
       </div>
@@ -75,7 +75,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
       <AddressElement options={{ mode: "shipping" }} />
       <h2 className="font-semibold mt-4 mb-2">Payment Information</h2>
       <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
-      <div className="py-4 text-center text-slate-700 text-lg font-bold">
+      <div className="py-4 text-center text-lg font-bold">
         Total: {formattedPrice}
       </div>
       <div className="mb-4">

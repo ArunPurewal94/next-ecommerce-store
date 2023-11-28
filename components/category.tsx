@@ -12,8 +12,6 @@ export const Category: React.FC<CategoryProps> = ({ label, icon }) => {
   const pathname = usePathname();
   const category = pathname ? pathname.split("/")[1] : "";
 
-  if (pathname?.startsWith("/admin")) return null;
-
   return (
     <Link href={`/${label}`}>
       <span

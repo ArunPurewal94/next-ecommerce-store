@@ -13,9 +13,9 @@ export const AdminNavItem: React.FC<AdminNavItemProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col md:flex-row items-center justify-center text-center gap-2 p-2 border-b-2 hover:text-slate-800 transition cursor-pointer ${
+      className={`flex flex-col md:flex-row items-center justify-center text-center gap-2 p-3 border-b-2 hover:text-slate-800 dark:hover:text-white transition cursor-pointer ${
         selected
-          ? "border-b-slate-800 text-slate-800 font-semibold"
+          ? "border-b-slate-800 text-slate-800 dark:text-white font-semibold"
           : "border-transparent text-slate-500"
       }`}
     >

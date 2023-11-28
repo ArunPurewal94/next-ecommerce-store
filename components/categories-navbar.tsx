@@ -1,14 +1,21 @@
+"use client";
+
 import { categories } from "@/lib/products";
 import { Category } from "@/components/category";
 import { Container } from "@/components/ui/container";
 import React from "react";
+import { usePathname } from "next/navigation";
 
 interface CategoriesNavbarProps {}
 
 export const CategoriesNavbar: React.FC<CategoriesNavbarProps> = () => {
+  const pathname = usePathname();
+
   if (!categories) {
     return null;
   }
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <Container>

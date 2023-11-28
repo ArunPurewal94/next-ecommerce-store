@@ -214,9 +214,7 @@ export const AddProductForm = () => {
 
   return (
     <>
-      <h1 className="text-2xl text-slate-900 mt-5 text-center font-semibold">
-        Add a Product
-      </h1>
+      <h1 className="text-2xl mt-5 text-center font-semibold">Add a Product</h1>
       <Input
         id="name"
         label="Name"
