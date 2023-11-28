@@ -18,7 +18,7 @@ export const Category: React.FC<CategoryProps> = ({ label, icon }) => {
         className={`flex flex-col md:flex-row gap-2 items-center justify-between p-2 border-b-2 hover:text-slate-800 transition cursor-pointer
         ${
           label === category
-            ? "border-b-slate-800 text-slate-800 font-semibold"
+            ? "border-b-slate-800 text-slate-800 dark:text-white font-semibold"
             : "border-transparent text-slate-500"
         }`}
       >

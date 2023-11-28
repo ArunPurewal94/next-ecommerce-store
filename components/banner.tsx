@@ -1,9 +1,8 @@
 "use client";
 
+import React from "react";
 import { usePathname } from "next/navigation";
 import { categories } from "@/lib/products";
-import React from "react";
-import { TfiPaintRoller } from "react-icons/tfi";
 
 export const Banner = () => {
   const pathname = usePathname();
