@@ -22,16 +22,16 @@ export const EditColorInput: React.FC<ColorInputProps & { product: any }> = ({
 }) => {
   const [isSelected, setIsSelected] = useState(false);
   const [file, setFile] = useState<File | null | undefined | string>(null);
+  const [existingImage, setExistingImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (product && product.images) {
-      // If there's an image associated with this color in the product data, check this color and set the file
       const matchingImage = product.images.find(
         (image: any) => image.color === item.color
       );
       if (matchingImage) {
         setIsSelected(true);
-        setFile(matchingImage.image);
+        setExistingImage(matchingImage.image);
       }
     }
   }, [item.color, product]);
@@ -40,12 +40,14 @@ export const EditColorInput: React.FC<ColorInputProps & { product: any }> = ({
     if (isProductCreated) {
       setIsSelected(false);
       setFile(null);
+      setExistingImage(null);
     }
   }, [isProductCreated]);
 
   const handleFileChange = useCallback(
     (value: File) => {
       setFile(value);
+      setExistingImage(null);
       addImageToState({ ...item, image: value });
     },
     [addImageToState, item]
@@ -57,6 +59,7 @@ export const EditColorInput: React.FC<ColorInputProps & { product: any }> = ({
 
       if (!e.target.checked) {
         setFile(null);
+        setExistingImage(null);
         removeImageFromState(item);
       }
     },
@@ -92,7 +95,6 @@ export const EditColorInput: React.FC<ColorInputProps & { product: any }> = ({
             width={150}
             height={150}
           />
-          <p>{file.name}</p>
           <Button
             variant="destructive"
             size="sm"
@@ -100,6 +102,40 @@ export const EditColorInput: React.FC<ColorInputProps & { product: any }> = ({
               setFile(null);
               removeImageFromState(item);
             }}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
+
+      {isSelected && file && typeof file === "string" && (
+        <div className="flex items-center gap-3">
+          <Image src={file} alt="Existing image" width={150} height={150} />
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => {
+              setFile(null);
+              removeImageFromState(item);
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
+
+      {existingImage && (
+        <div className="flex items-center justify-between">
+          <Image
+            src={existingImage}
+            alt="Existing image"
+            width={150}
+            height={150}
+          />
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setExistingImage(null)}
           >
             Cancel
           </Button>

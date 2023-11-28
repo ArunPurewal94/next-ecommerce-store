@@ -1,18 +1,42 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { categories } from "@/lib/products";
+import React from "react";
 import { TfiPaintRoller } from "react-icons/tfi";
 
 export const Banner = () => {
+  const pathname = usePathname();
+  const currentPage = pathname ? pathname.split("/")[1] : null; // Get the current page
+
+  const currentCategory = categories.find(
+    (category) => category.label === currentPage
+  );
+
   return (
-    <div className="relative border m-8 rounded-lg bg-gray-300">
+    <div className="relative border m-8 rounded-lg">
       <div className="flex items-center justify-evenly px-8 py-12 flex-col gap-5 lg:gap-2 lg:flex-row">
         <div className="space-y-2">
-          <h1 className="text-4xl text-center lg:text-left">Jattflex Garmz</h1>
-          <p className="text-lg text-center lg:text-left">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque,
-            voluptas, nam dolorum quos.
-          </p>
-        </div>
-        <div>
-          <TfiPaintRoller size={50} className="text-indigo-700" />
+          {currentCategory ? (
+            // If we're on a category page
+            <div className="flex items-center gap-x-6">
+              <h1 className="text-4xl text-center lg:text-left">
+                {currentCategory.label}
+              </h1>
+              <currentCategory.icon size={50} className="text-indigo-700" />
+            </div>
+          ) : (
+            // If we're on the home page
+            <>
+              <h1 className="text-4xl text-center lg:text-left">
+                Jattflex Garmz
+              </h1>
+              <p className="text-lg text-center lg:text-left">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Itaque, voluptas, nam dolorum quos.
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -99,7 +99,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 
   const addImageToState = useCallback((value: ImageType) => {
     setSelectedFiles((prev) => {
-      return { ...prev, [value.color + value.colorCode]: value.image };
+      return { ...prev, [value.color + "-" + value.colorCode]: value.image };
     });
   }, []);
 
@@ -113,15 +113,13 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
 
   useEffect(() => {
     setCustomValue("images", images);
+    console.log(images);
   }, [images, setCustomValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    // Merge selectedFiles into images
-    setImages((prevImages) => ({ ...prevImages, ...selectedFiles }));
-
-    let uploadedImages: UploadedImageType[] = [];
+    let uploadedImages: UploadedImageType[] = product.images;
 
     if (!data.sizes || data.sizes.length === 0) {
       setIsLoading(false);
@@ -137,21 +135,13 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
       return;
     }
 
-    if (!images || Object.values(images).length === 0) {
-      setIsLoading(false);
-      toast.error("Must upload at least one image");
-      setTimeout(() => setIsLoading(false), 5000);
-      return;
-    }
-
     const handleImageUploads = async () => {
-      toast("Creating Product, Please wait...");
-
+      toast("Updating Product, Please wait...");
       try {
-        for (const [key, item] of Object.entries(images)) {
+        for (const [key, item] of Object.entries(selectedFiles)) {
           if (item instanceof File) {
             const filename = new Date().getTime() + "-" + item.name;
-            const [color, colorCode] = key.split("");
+            const [color, colorCode] = key.split("-");
             const storage = getStorage(firebase);
             const storageRef = ref(storage, `products/${filename}`);
             const uploadTask = uploadBytesResumable(storageRef, item);
@@ -223,7 +213,7 @@ export const EditProductForm: React.FC<EditProductFormProps> = ({
         setIsLoading(false);
       });
 
-    setImages({});
+    setSelectedFiles({});
     reset();
     setIsLoading(false);
   };

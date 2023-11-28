@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { ImageType } from "./add-product-form";
 import { ImageInput } from "./image-input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface ColorInputProps {
   item: ImageType;
@@ -71,7 +72,12 @@ export const ColorInput: React.FC<ColorInputProps> = ({
 
       {isSelected && file && (
         <div className="flex items-center gap-3">
-          <p>{file.name}</p>
+          <Image
+            src={URL.createObjectURL(file)}
+            alt="Selected image"
+            width={150}
+            height={150}
+          />
           <Button variant="destructive" size="sm" onClick={() => setFile(null)}>
             Cancel
           </Button>

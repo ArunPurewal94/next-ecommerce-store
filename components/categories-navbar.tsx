@@ -1,12 +1,11 @@
-import { getCategories } from "@/actions/get-categories";
+import { categories } from "@/lib/products";
 import { Category } from "@/components/category";
 import { Container } from "@/components/ui/container";
+import React from "react";
 
 interface CategoriesNavbarProps {}
 
-export const CategoriesNavbar = async ({}: CategoriesNavbarProps) => {
-  const categories = await getCategories();
-
+export const CategoriesNavbar: React.FC<CategoriesNavbarProps> = () => {
   if (!categories) {
     return null;
   }
@@ -15,7 +14,11 @@ export const CategoriesNavbar = async ({}: CategoriesNavbarProps) => {
     <Container>
       <div className="pt-4 flex flex-row items-center justify-evenly overflow-x-auto">
         {categories.map((category) => (
-          <Category key={category} label={category} />
+          <Category
+            key={category.label}
+            label={category.label}
+            icon={React.createElement(category.icon)}
+          />
         ))}
       </div>
     </Container>
