@@ -11,7 +11,7 @@ export const Navbar = async () => {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="sticky top-0 w-full z-50 shadow-sm">
+    <div className="sticky top-0 w-full z-50 shadow-sm bg-white dark:bg-black">
       <div className="py-4 border-b">
         <Container>
           <div className="flex items-center justify-between">

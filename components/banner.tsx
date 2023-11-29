@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { categories } from "@/lib/products";
+import Image from "next/image";
 
 export const Banner = () => {
   const pathname = usePathname();
@@ -13,8 +14,8 @@ export const Banner = () => {
   );
 
   return (
-    <div className="relative border m-8 rounded-lg">
-      <div className="flex items-center justify-evenly px-8 py-12 flex-col gap-5 lg:gap-2 lg:flex-row">
+    <div className="relative border m-8 rounded-lg h-[400px] w-full">
+      <div className="flex items-center justify-center px-8 py-12 h-full w-full flex-col gap-5 lg:gap-2 lg:flex-row">
         <div className="space-y-2">
           {currentCategory ? (
             // If we're on a category page
@@ -26,15 +27,16 @@ export const Banner = () => {
             </div>
           ) : (
             // If we're on the home page
-            <>
-              <h1 className="text-4xl text-center lg:text-left">
-                Jattflex Garmz
-              </h1>
-              <p className="text-lg text-center lg:text-left">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Itaque, voluptas, nam dolorum quos.
-              </p>
-            </>
+            <div className="w-full h-full">
+              <Image
+                src={"/logo.jpg"}
+                alt="Jattflex Garmz"
+                fill
+                priority
+                sizes=""
+                className="object-fill object-left rounded-lg"
+              />
+            </div>
           )}
         </div>
       </div>
