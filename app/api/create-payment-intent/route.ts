@@ -68,7 +68,6 @@ export async function POST(request: Request) {
             amount: total,
             products: items,
             deliveryStatus: "pending",
-            status: "complete",
           },
         }),
       ]);
