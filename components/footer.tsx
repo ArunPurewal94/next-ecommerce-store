@@ -2,7 +2,7 @@ import { BiLogoInstagram, BiLogoFacebook, BiLogoTwitter } from "react-icons/bi";
 
 export const Footer = () => {
   return (
-    <div className="flex items-center justify-between p-5 border-t">
+    <div className="sticky bottom-0 flex items-center justify-between p-5 border-t">
       <p className="text-sm">&copy; Arun Purewal</p>
       <ul className="flex items-center gap-3">
         <li>
