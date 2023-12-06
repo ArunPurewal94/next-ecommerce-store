@@ -3,12 +3,9 @@
 import { Order, User } from "@prisma/client";
 import { FormatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { MdDeliveryDining, MdDone, MdRemoveRedEye } from "react-icons/md";
+import { MdDone, MdRemoveRedEye } from "react-icons/md";
 import { TbTruckDelivery } from "react-icons/tb";
 import { HiMiniClock } from "react-icons/hi2";
-import { useCallback } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Status } from "@/components/ui/status";
 import {

@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { buffer } from "micro";
+import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import prisma from "@/lib/prismadb";
 
@@ -17,53 +17,39 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const buff = await buffer(req);
-  const signature = req.headers["stripe-signature"];
+  const buf = await buffer(req);
+  const sig = req.headers["stripe-signature"];
 
-  if (!signature) {
-    return res.status(400).send("Missing Stripe Signature");
+  if (!sig) {
+    return res.status(400).send("Missing the stripe signature");
   }
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      buff,
-      signature,
+      buf,
+      sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch (error) {
-    return res.status(400).send("Webhook Error" + error);
+  } catch (err) {
+    return res.status(400).send("Webhook Error" + err);
   }
 
   switch (event.type) {
+    // charge succeeded is our stripe webhook event in stripe.com
     case "charge.succeeded":
       const charge: any = event.data.object as Stripe.Charge;
+
       if (typeof charge.payment_intent === "string") {
-        await prisma.order.update({
-          where: {
-            paymentIntentId: charge.payment_intent,
-          },
-          data: {
-            status: "complete",
-            deliveryStatus: "pending",
-            address: {
-              set: {
-                city: charge.shipping?.address.city,
-                country: charge.shipping?.address.country,
-                line1: charge.shipping?.address.line1,
-                line2: charge.shipping?.address.line2,
-                post_code: charge.shipping?.address.postal_code,
-                state: charge.shipping?.address.state,
-              },
-            },
-          },
+        await prisma?.order.update({
+          where: { paymentIntentId: charge.payment_intent },
+          data: { status: "complete", address: charge.shipping?.address },
         });
       }
       break;
-
     default:
-      console.log("Event Type" + event.type);
+      console.log("Unhandled event type:" + event.type);
   }
 
   res.json({ received: true });
